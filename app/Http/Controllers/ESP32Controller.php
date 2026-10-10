@@ -9,7 +9,7 @@ class ESP32Controller extends Controller
 {
     public function dashboard()
     {
-        $records = ESP32Registry::whereToday('created_at')->get();
+        $records = ESP32Registry::whereToday('created_at')->latest()->get();
         return view('dashboard', compact('records'));
     }
 
