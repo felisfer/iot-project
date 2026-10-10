@@ -101,7 +101,7 @@
                             {{ $row->humidity }} %
                         </td>
                         <td class="px-6 py-4">
-                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium {{ strtolower($row->status_read_dht11) === 'ok' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-medium {{ strtolower($row->status_read_dht11) === 'succeed' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                         {{ $row->status_read_dht11 }}
                                     </span>
                         </td>
