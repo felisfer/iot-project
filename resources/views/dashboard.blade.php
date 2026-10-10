@@ -15,13 +15,24 @@
     <!-- Encabezado -->
     <div class="mb-8 flex flex-col md:flex-row md:items-center md:justify-between">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Monitoreo ESP32 + DHT11</h1>
-            <p class="text-sm text-gray-500 mt-1">Últimas 100 lecturas del dispositivo</p>
+            <h1 class="text-3xl font-bold text-gray-900">Monitoring ESP32 + DHT11</h1>
+            <p class="text-sm text-gray-500 mt-1">Last 24 hours</p>
         </div>
         <div class="mt-4 md:mt-0">
             <button onclick="window.location.reload()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-sm transition-all duration-200">
-                Actualizar
+                Update
             </button>
+        </div>
+    </div>
+
+    <div class="flex flex-row mb-8 justify-between gap-6">
+        <div class="bg-white p-6 rounded-xl w-full">
+            <h2 class="text-lg font-semibold mb-2">Temperature</h2>
+            <span class="bg-red-100 text-red-700 px-2.5 py-1 rounded-full font-medium">{{ number_format($records[0]->temperature ?? 0, 1) }} °C</span>
+        </div>
+        <div class="bg-white p-6 rounded-xl w-full">
+            <h2 class="text-lg font-semibold mb-2">Humidity</h2>
+            <span class="bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full font-medium">{{ $records[0]->humidity ?? 0 }} %</span>
         </div>
     </div>
 
@@ -30,7 +41,7 @@
         <!-- Gráfica de Temperatura -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                <span class="w-3 h-3 bg-red-500 rounded-full inline-block"></span> Evolución de Temperatura (°C)
+                <span class="w-3 h-3 bg-red-500 rounded-full inline-block"></span> Temperature Evolution (°C)
             </h2>
             <div class="relative h-64">
                 <canvas id="temperatureChart"></canvas>
@@ -40,7 +51,7 @@
         <!-- Gráfica de Humedad -->
         <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
             <h2 class="text-lg font-semibold text-gray-700 mb-4 flex items-center gap-2">
-                <span class="w-3 h-3 bg-blue-500 rounded-full inline-block"></span> Evolución de Humedad (%)
+                <span class="w-3 h-3 bg-blue-500 rounded-full inline-block"></span> Humidity Evolution (%)
             </h2>
             <div class="relative h-64">
                 <canvas id="humidityChart"></canvas>
@@ -51,10 +62,10 @@
     <!-- Tabla de Registros -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div class="px-6 py-4 border-b border-gray-100 bg-gray-50 flex justify-between items-center">
-            <h2 class="text-lg font-semibold text-gray-800">Histórico de Lecturas</h2>
+            <h2 class="text-lg font-semibold text-gray-800">Records table</h2>
             <span class="text-xs bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-full font-medium">
-                    Total: {{ count($records ?? []) }} registros
-                </span>
+                    Total: {{ count($records ?? []) }} records
+            </span>
         </div>
 
         <div class="overflow-x-auto">
@@ -62,11 +73,11 @@
                 <thead class="bg-gray-50 text-gray-700 uppercase text-xs tracking-wider border-b">
                 <tr>
                     <th class="px-6 py-3">ID</th>
-                    <th class="px-6 py-3">Fecha y Hora</th>
-                    <th class="px-6 py-3">Dispositivo</th>
-                    <th class="px-6 py-3">Temperatura</th>
-                    <th class="px-6 py-3">Humedad</th>
-                    <th class="px-6 py-3">Estado Sensor</th>
+                    <th class="px-6 py-3">Date and time</th>
+                    <th class="px-6 py-3">Device</th>
+                    <th class="px-6 py-3">Temperature</th>
+                    <th class="px-6 py-3">Humidity</th>
+                    <th class="px-6 py-3">Sensor status</th>
                     <th class="px-6 py-3">LED 01</th>
                     <th class="px-6 py-3">LED 02</th>
                 </tr>
@@ -108,7 +119,7 @@
                 @empty
                     <tr>
                         <td colspan="8" class="px-6 py-8 text-center text-gray-400">
-                            No hay lecturas registradas aún.
+                            There isn't any record yet.
                         </td>
                     </tr>
                 @endforelse
